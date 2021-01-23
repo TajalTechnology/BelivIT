@@ -11,7 +11,6 @@ const app = express()
 const bodyParser = require('body-parser')
 app.set('view engine', 'ejs')
 app.set('views', __dirname + '/views')
-// app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
 app.use(express.json());
 
 // database configurations
@@ -32,10 +31,12 @@ mongoose.connect(process.env.DATABASE_URL, {
 // customize routers
 const indexRouter = require('./routes/index')
 const authorRouter = require('./routes/authors')
+const bookRouter = require('./routes/books')
 
 // end-point roots
 app.use('/', indexRouter)
 app.use('/api', authorRouter)
+app.use('/api', bookRouter)
 
 // port
 app.listen(process.env.PORT || 3005)

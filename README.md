@@ -3,7 +3,7 @@ Total Task List
 
 1.Initial Project Set-up.
 2.Db configure and Author model create.
-3.Author's API create.
+3.Author's API create.//
 3.Complete create end-pont.
 4.Complete update end-pont.
 5.Complete get end-pont.
