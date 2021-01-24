@@ -7,7 +7,14 @@ const authorSchema = new mongoose.Schema({
         trim: true,
         minlength:3,
         maxlength:45,
+    },  
+},
+{
+    timestamps: {
+        createdAt: "createdAt",
+        updatedAt: "updatedAt",
     }
-})
+}
+)
 
 module.exports = mongoose.model('Author', authorSchema)

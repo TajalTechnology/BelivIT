@@ -1,69 +1,109 @@
 const Book = require('../models/book')
 
 module.exports = {
-    
-    createBook:(req, res)=>{
-        let { name, publisher, author} = req.body
-        
-        let book = new Book({
-            name,
-            publisher,
-            author
-        })
+
+    createBook: (req, res) => {
+
+        let { name, publisher, author } = req.body
+        let book = new Book({ name, publisher, author })
 
         book.save()
             .then(book => {
                 res.status(201).json({ book })
             })
             .catch(err => {
-                res.status(400).json({ err })
+                res.status(500).json({
+                    "message": err.message || "Some error occurred while post a book",
+                })
             })
 
     },
-    updateBook:(req, res)=>{
-        let { name, publisher, author} = req.body
+
+    updateBook: (req, res) => {
+
+        let { name, publisher, author } = req.body
         let { id } = req.params
 
         Book.findOneAndUpdate(
             { _id: id },
-            { $set: { 
-                name,
-                publisher,
-                author, 
-             } },
+            {
+                $set: {
+                    name,
+                    publisher,
+                    author,
+                }
+            },
             { new: true }
         )
             .then(book => {
-                console.log('Hello')
-                res.status(201).json({ book })
+                res.status(202).json({ book })
             })
             .catch(err => {
-                res.status(400).json({ err })
+                res.status(500).json({
+                    message: err.message || "Some error occurred while updating books info"
+                })
             })
 
     },
-    getBook:(req, res)=>{
+
+    getBook: async (req, res) => {
+
+        let currentPage = parseInt(req.query.page) || 1
+        let itemPerPage = 2
+        let totalBooks = await Book.countDocuments()
+        let totalPage = Math.ceil(totalBooks / itemPerPage)
         
         Book.find()
-        .populate('author')
-        .exec()
+            .populate('author')
+            .skip((itemPerPage * currentPage) -itemPerPage)
+            .limit(itemPerPage)
+            // .exec()
             .then(books => {
-                res.status(201).json({ books })
+                if (books) {
+                    res.status(200).json({ 
+                        "pagination":{
+                            totalBooks,
+                            currentPage,
+                            totalPage
+                        },
+                        books 
+                    })
+                }
+                else {
+                    return res.status(404).send({
+                        message: "Books not found ",
+                    });
+                }
+
             })
             .catch(err => {
-                res.status(400).json({ err })
+                res.status(500).json({
+                    message: err.message || "Some error occurred"
+                })
             })
 
     },
-    deleteBook:(req, res)=>{
+
+    deleteBook: (req, res) => {
+
         let { id } = req.params
 
         Book.findOneAndDelete({ _id: id })
-            .then(() => {
-                res.status(201).json({ message: 'Book deleted successfully' })
+            .then(books => {
+                if (!books) {
+                    return res.status(404).send({
+                        message: "Book not found ",
+                    });
+                }
+                else {
+                    res.status(200).json({ message: 'Book deleted successfully' })
+                }
             })
             .catch(err => {
-                res.status(400).json({ err })
+                res.status(500).json({
+                    message: err.message || "Some error occurred"
+                })
             })
+
     },
 }
