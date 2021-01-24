@@ -1,4 +1,5 @@
 const Book = require('../models/book')
+const {validationResult} = require('express-validator')
 
 module.exports = {
 
@@ -6,6 +7,15 @@ module.exports = {
 
         let { name, publisher, author } = req.body
         let book = new Book({ name, publisher, author })
+
+        //error show
+        let errors = validationResult(req)
+        const formatter = (error) => error.msg
+        if (!errors.isEmpty()) {
+            return res.status(404).send({
+                message: errors.formatWith(formatter).mapped(),
+            });
+        }
 
         book.save()
             .then(book => {
@@ -23,6 +33,15 @@ module.exports = {
 
         let { name, publisher, author } = req.body
         let { id } = req.params
+
+        //error show
+        let errors = validationResult(req)
+        const formatter = (error) => error.msg
+        if (!errors.isEmpty()) {
+            return res.status(404).send({
+                message: errors.formatWith(formatter).mapped(),
+            });
+        }
 
         Book.findOneAndUpdate(
             { _id: id },

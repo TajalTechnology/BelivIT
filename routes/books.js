@@ -1,4 +1,6 @@
 const router = require('express').Router()
+const { bookValidator } = require('../middleware/books')
+
 const {
     createBook,
     getBook,
@@ -7,8 +9,8 @@ const {
 } = require('../controllers/books')
 
 
-router.post('/books', createBook)
-router.patch('/books/:id', updateBook)
+router.post('/books', bookValidator, createBook)
+router.patch('/books/:id', bookValidator, updateBook)
 router.get('/books', getBook)
 router.delete('/books/:id', deleteBook)
 

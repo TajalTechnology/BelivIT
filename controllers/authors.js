@@ -1,10 +1,20 @@
 const Author = require('../models/author')
+const { validationResult } = require('express-validator')
 
 module.exports = {
 
     authorCreate: (req, res) => {
 
         let { name } = req.body
+
+        //error show
+        let errors = validationResult(req)
+        const formatter = (error) => error.msg
+        if (!errors.isEmpty()) {
+            return res.status(404).send({
+                message: errors.formatWith(formatter).mapped(),
+            });
+        }
 
         let author = new Author({ name })
 
@@ -24,6 +34,15 @@ module.exports = {
 
         let { name } = req.body
         let { id } = req.params
+
+        //error show
+        let errors = validationResult(req)
+        const formatter = (error) => error.msg
+        if (!errors.isEmpty()) {
+            return res.status(404).send({
+                message: errors.formatWith(formatter).mapped(),
+            });
+        }
 
         Author.findOneAndUpdate(
             { _id: id },
