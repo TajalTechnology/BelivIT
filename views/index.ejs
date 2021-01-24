@@ -11,8 +11,79 @@
     <h1 style="background-color: blue; text-align: center;">Backend API list || Developed by Md.Tajal Islam</h1>
     <h3 style="text-align: center;">Company Name: BelivIT</h3>
     <hr>
-    <p style="text-align: center;"><i>Module Name:</i><b>Books</b></p>
+    <p style="text-align: center;"><i>Module Name:</i><b>Autors</b></p>
+    <hr style="height: 6px; background-color: aqua;">
+    <pre>
+       1. ###:Author Create: http://localhost:6002/api/authors => POST
+
+        Payload:
+        {
+            "name":"sopnil-islam"
+         }
+    </pre>
     <hr>
+    <pre>
+       2.###Author Update: http://localhost:6002/api/authors/:id => PATCH
+
+        Payload:
+        {
+            "name":"sopnil-islam"
+         }
+    </pre>
+    <hr>
+    <pre>
+        3. ###Author Update: http://localhost:6002/api/authors/:id => DELETE
+    </pre>
+    <hr>
+    <pre>
+        4. ###Author View: http://localhost:6002/api/authors => GET
+        ***pagination
+        ***QueryString:
+        ***http://localhost:6002/api/authors?page=2
+
+    </pre>
+    <hr>
+    <p style="text-align: center;"><i>Module Name:</i><b>Books</b></p>
+    <hr style="height: 6px; background-color: aqua;">
+    <pre>
+        5. ###Author Create: http://localhost:6002/api/books => POST
+
+        Payload:
+        {
+            "name":"myself",
+            "publisher":"My-name-3",
+            "author":[
+                "600d4e351d7233431da8755b",
+                "600d4dc31d7233431da87556"
+            ]
+        }
+    </pre>
+    <hr>
+    <pre>
+        6. ###Author Update: http://localhost:6002/api/books/:id => PATCH
+
+        Payload:
+        {
+            "name":"myself",
+            "publisher":"My-name-3",
+            "author":[
+                "600d4e351d7233431da8755b",
+                "600d4dc31d7233431da87556"
+            ]
+        }
+    </pre>
+    <hr>
+    <pre>
+        7. ###Author Update: http://localhost:6002/api/books/:id => DELETE
+    </pre>
+    <hr>
+    <pre>
+        8. ###Author View: http://localhost:6002/api/books => GET
+        ***pagination
+        ***queryString:
+        ***http://localhost:6002/api/books?page=2
+
+    </pre>
 </body>
 
 </html>
