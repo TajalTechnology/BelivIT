@@ -23,6 +23,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
     useCreateIndex: true,
+    useFindAndModify: false,
     useUnifiedTopology: true
 }).then(() => {
     console.log("Successfully connected to the database");
@@ -34,14 +35,16 @@ mongoose.connect(process.env.DATABASE_URL, {
 
 // customize routers
 const indexRouter = require('./routes/index')
-const authorRouter = require('./routes/authors')
-const bookRouter = require('./routes/books')
+const orderRouter = require('./routes/orders')
+const menuRouter = require('./routes/menus')
+const userRouter = require('./routes/users')
 
 
 // end-point roots
 app.use('/', indexRouter)
-app.use('/api', authorRouter)
-app.use('/api', bookRouter)
+app.use('/api', orderRouter)
+app.use('/api', menuRouter)
+app.use('/api', userRouter)
 
 
 // port
